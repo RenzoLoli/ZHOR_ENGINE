@@ -25,7 +25,7 @@ void MainScene::init(GameContext *context)
 void MainScene::update(GameContext *context, double &dt)
 {
 
-    Scene* scn = findOnChild<Scene>("root/hola");
+    Scene* scn = findOnChild<Scene>("root");
     if(scn != nullptr){
         std::cout << scn->getName() << "\n";
     }

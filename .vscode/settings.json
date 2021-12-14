@@ -55,7 +55,6 @@
         "sstream": "cpp"
     },
     "C_Cpp.default.includePath": [
-        "${workspaceFolder}/**",
-        "D:/projects/c++/______/SFML-2.5.1/include"
+        "${workspaceFolder}/**"
     ]
 }

@@ -39,15 +39,6 @@ void MainScene::update(GameContext *context, double &dt)
     if(dirX != 0) velx += dirX * 200 * dt; else velx *= roz;
     if(dirY != 0) vely += dirY * 200 * dt; else vely *= roz;
 
-  /*  if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
-        velx -= 200*dt;
-    }
-    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
-        velx += 200*dt;
-    }else{
-        velx *= .98f;
-    }
-*/
     x += velx*dt;
     y += vely*dt;
 }

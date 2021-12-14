@@ -21,10 +21,10 @@ OUTPUT	:= output
 SRC		:= src
 
 # define include directory
-INCLUDE	:= include D:/projects/c++/______/SFML-2.5.1/include	
+INCLUDE	:= include
 
 # define lib directory
-LIB		:= lib D:/projects/c++/______/SFML-2.5.1/lib
+LIB		:= lib lib/SFML
 
 ifeq ($(OS),Windows_NT)
 MAIN	:= main.exe

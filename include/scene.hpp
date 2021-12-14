@@ -5,6 +5,7 @@
 #include <string>
 #include <map>
 
+#include "errors/string_error.hpp"
 #include "game_context.hpp"
 
 class SceneTree;
@@ -13,7 +14,7 @@ class Scene : protected sf::Transformable
 {
 private:
     friend class SceneTree;
-    SceneTree *sceneRoot;
+    
     std::map<std::string, Scene *> sceneChildren;
 
     void _init(GameContext *context);
@@ -27,6 +28,7 @@ private:
     void _free();
 
     Scene *parent;
+    SceneTree *sceneRoot;
     sf::RenderTexture* graphics;
     std::string sceneName;
 
@@ -56,6 +58,8 @@ public:
     template <class SCENE>
     SCENE *getChild(std::string _sceneName);
 
+    SceneTree* getSceneTree();
+
     Scene *getSceneChild(std::string _sceneName);
 
    template <class SCENE>
@@ -63,7 +67,7 @@ public:
     {
 
         if (_path.empty())
-            throw "path vacio";
+            throw StringError("path erroneo");
         if (_path.front() == '/')
             _path.erase(_path.begin());
         if (_path.back() == '/')
@@ -73,13 +77,19 @@ public:
         std::string word = "";
 
         Scene *aux = this;
+
+        std::getline(stream, word, '/');
+        if(word.compare("root") == 0) aux = this;
+        else throw StringError("path erroneo");
+
         while (std::getline(stream, word, '/'))
         {
-            if (word.empty())
+            if (word.empty()){
                 continue;
-            std::cout << aux->getName() << ": " << word << "\n";
+            }
             aux = aux->getSceneChild(word);
-            if(aux == nullptr) throw "no existe la escena hija";
+            if(aux == nullptr) 
+                throw StringError("no existe la escena hija");
         }
 
         return dynamic_cast<SCENE *>(aux);

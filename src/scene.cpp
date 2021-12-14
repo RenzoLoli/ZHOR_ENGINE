@@ -84,11 +84,15 @@ void Scene::_free()
     delete this->graphics;
 }
 
+SceneTree* Scene::getSceneTree(){
+    return this->sceneRoot;
+}
+
 void Scene::addChild(Scene *nScene)
 {
 
     if (nScene == nullptr)
-        throw "insertar escena hija fue NULL";
+        throw StringError("insertar escena hija fue NULL");
 
     nScene->sceneRoot = this->sceneRoot;
     nScene->parent = this;
@@ -114,7 +118,7 @@ SCENE* Scene::getChild(std::string _sceneName)
         return dynamic_cast<SCENE *>(this->sceneChildren[_sceneName]);
     }
 
-    throw "no existe la escena hija";
+    throw StringError("no existe la escena hija");
 }
 
 Scene* Scene::getSceneChild(std::string _sceneName)
@@ -124,6 +128,6 @@ Scene* Scene::getSceneChild(std::string _sceneName)
         return this->sceneChildren[_sceneName];
     }
 
-    throw "no existe la escena hija";
+    throw StringError("no existe la escena hija");
 }
 

@@ -46,7 +46,7 @@ SCENE *SceneTree::findChild(std::string _path)
 {
 
     if (_path.empty())
-        throw "path vacio";
+        throw StringError("path erroneo");
     if (_path.front() == '/')
         _path.erase(_path.begin());
     if (_path.back() == '/')
@@ -56,11 +56,15 @@ SCENE *SceneTree::findChild(std::string _path)
     std::string word;
 
     Scene *aux = nullptr;
+
+    std::getline(stream, word, '/');
+    if(word.compare("root") == 0) aux = this->mainScene;
+    else throw StringError("path erroneo");
+
     while (std::getline(stream, word, '/'))
     {
-        if (word.empty())
-            continue;
-        aux = this->mainScene->getSceneChild(word);
+        if (word.empty()) continue;
+        aux = aux->getSceneChild(word);
     }
 
     return dynamic_cast<SCENE *>(aux);
@@ -70,7 +74,7 @@ Scene *SceneTree::findScene(std::string _path)
 {
 
     if (_path.empty())
-        throw "path vacio";
+        throw StringError("path erroneo");
     if (_path.front() == '/')
         _path.erase(_path.begin());
     if (_path.back() == '/')
@@ -80,11 +84,15 @@ Scene *SceneTree::findScene(std::string _path)
     std::string word;
 
     Scene *aux = nullptr;
+
+    std::getline(stream, word, '/');
+    if(word.compare("root") == 0) aux = this->mainScene;
+    else throw StringError("path erroneo");
+    
     while (std::getline(stream, word, '/'))
     {
-        if (word.empty())
-            continue;
-        aux = this->mainScene->getSceneChild(word);
+        if (word.empty()) continue;
+        aux = aux->getSceneChild(word);
     }
 
     return aux;

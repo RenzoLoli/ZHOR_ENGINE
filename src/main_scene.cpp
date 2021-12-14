@@ -24,6 +24,12 @@ void MainScene::init(GameContext *context)
 
 void MainScene::update(GameContext *context, double &dt)
 {
+
+    Scene* scn = findOnChild<Scene>("root/hola");
+    if(scn != nullptr){
+        std::cout << scn->getName() << "\n";
+    }
+
     rect.setPosition({x, y});
 
     int8_t left  = (sf::Keyboard::isKeyPressed(sf::Keyboard::Left));

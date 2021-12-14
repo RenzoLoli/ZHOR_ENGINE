@@ -3,6 +3,8 @@
 
 #include <sstream>
 
+#include "errors/string_error.hpp"
+
 struct GameContext;
 
 class Scene;
@@ -26,11 +28,10 @@ public:
 
     SceneTree();
     ~SceneTree();
+
     template<class SCENE>
     SCENE* findChild(std::string _path);
-
     Scene* findScene(std::string _path);
-
 };
 
 #endif

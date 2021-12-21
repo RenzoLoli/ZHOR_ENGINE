@@ -1,8 +1,13 @@
 #include <iostream>
 
-#include "game_controller.hpp"
+#include "ZHOR_ENGINE/zhor.hpp"
 
 int main(int argc, char *argv[])
 {
-	GameController().run();
+	GameController controller;
+	if(controller.createWindow()){
+		controller.run();
+	}
+
+	return 0;
 }

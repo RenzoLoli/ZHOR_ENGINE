@@ -3,28 +3,30 @@
 # 'make clean'  removes all .o and executable files
 #
 
+mode := DEBUG
+
 # define the Cpp compiler to use
 CXX = g++
 
 # define any compile-time flags
+ifeq ($(mode), RELEASE)
+CXXFLAGS    := -std=c++17 -Wno-unused -Wno-narrowing
+LFLAGS      := -lsfml-graphics -lsfml-window -lsfml-system -mwindows
+OUTPUT	    := output\build
+else ifeq ($(mode), DEBUG)
 CXXFLAGS	:= -std=c++17 -Wall -Wextra -g 
-
-# define library paths in addition to /usr/lib
-#   if I wanted to include libraries not in /usr/lib I'd specify
-#   their path using -Lpath, something like:
-LFLAGS = -lsfml-graphics -lsfml-window -lsfml-system
-
-# define output directory
-OUTPUT	:= output
+LFLAGS 		:= -lsfml-graphics -lsfml-window -lsfml-system
+OUTPUT	    := output\debug
+endif
 
 # define source directory
-SRC		:= src
+SRC		:= src src/ZHOR_ENGINE src/scenes
 
 # define include directory
 INCLUDE	:= include
 
 # define lib directory
-LIB		:= lib lib/SFML
+LIB		:= lib lib/SFML output
 
 ifeq ($(OS),Windows_NT)
 MAIN	:= main.exe
@@ -81,10 +83,11 @@ $(MAIN): $(OBJECTS)
 	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $<  -o $@
 
 .PHONY: clean
+
 clean:
 	$(RM) $(call FIXPATH,$(OBJECTS))
 	@cls
 
 run: all clean
-	./$(OUTPUTMAIN)
+	.\$(OUTPUTMAIN)
 	@echo Executing 'run: all' complete!
